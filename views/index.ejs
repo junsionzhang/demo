@@ -7,8 +7,7 @@
  </head>
  <body>
   <script type="text/javascript">
-  $(function() {
-    $("#submit").click(function() {
+  function click(url) {
         var data = {
             username: $("#username").val(),
             password: $("#password").val()
@@ -16,25 +15,31 @@
         $.ajax({
             type: 'POST',
             data: data,
-            url: '/ajax/demo',
+            url: url,
             dataType: 'json',
             cache: false,
             timeout: 5000,
             success: function(data) {
-		alert(JSON.stringify(data));
+        alert(JSON.stringify(data));
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('error ' + textStatus + ' ' + errorThrown);
             }
         });
-    });
+    }
+
+  $(function() {
+    $("#submit1").click(new click('http://localhost:3000/ajax/demo');  
+    $("#submit2").click(new click('http://localhost:3001/ajax/demo');  
   });
+
   </script>
   <h1><%= title %></h1>
     <form>
         username:<input type="text" id="username" value="zhangsan"><br>
         password:<input type="text" id="password" value="111111"><br>
-        <button type="button" id="submit">login</button>
+        <button type="button" id="submit1">local  server</button><br>
+        <button type="button" id="submit1">remote server</button>
     </form>
  </body>
 </html>
