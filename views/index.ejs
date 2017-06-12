@@ -21,8 +21,7 @@
             cache: false,
             timeout: 5000,
             success: function(data) {
-                console.log(data);
-		alert(data);
+		alert(JSON.stringify(data));
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('error ' + textStatus + ' ' + errorThrown);
@@ -35,7 +34,7 @@
     <form>
         username:<input type="text" id="username" value="zhangsan"><br>
         password:<input type="text" id="password" value="111111"><br>
-        <button type="submit" id="submit">login</button>
+        <button type="button" id="submit">login</button>
     </form>
  </body>
 </html>

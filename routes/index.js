@@ -7,10 +7,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/ajax/demo', function(req, res) {
-    console.log("server accept: ", req.body.username, req.body.password);
+    var date =Date.now();
+    console.log(date, " server accept: ", req.body.username, req.body.password);
     var data = {
         name: req.body.username ,
-        id: req.body.password
+        id: req.body.password,
+        server: "server1"
     };
     res.json(data);
 })
