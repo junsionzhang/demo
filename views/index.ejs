@@ -1,13 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
- <head>
+<head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' type="text/css">
     <script src="/javascripts/jquery-3.2.1.min.js"></script>
- </head>
- <body>
-  <script type="text/javascript">
-  function click(url) {
+
+</head>
+<body>
+<script type="text/javascript">
+
+    function jsonpCallback(data) {
+        alert(JSON.stringify(data));
+    }
+
+    function ajaxCall(url) {
         var data = {
             username: $("#username").val(),
             password: $("#password").val()
@@ -19,27 +25,82 @@
             dataType: 'json',
             cache: false,
             timeout: 5000,
-            success: function(data) {
-        alert(JSON.stringify(data));
+
+            success: function (data) {
+                alert(JSON.stringify(data));
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+
+            error: function (jqXHR, textStatus, errorThrown) {
                 console.log('error ' + textStatus + ' ' + errorThrown);
             }
         });
     }
 
-  $(function() {
-    $('#submit1').on('click',function(){click('http://localhost:3000/ajax/demo');});
-    $("#submit2").click(new click('http://localhost:3001/ajax/demo');  
-  });
+    function jsonpCall(url) {
 
-  </script>
-  <h1><%= title %></h1>
-    <form>
-        username:<input type="text" id="username" value="zhangsan"><br>
-        password:<input type="text" id="password" value="111111"><br>
-        <button type="button" id="submit1">local  server</button><br>
-        <button type="button" id="submit2">remote server</button>
-    </form>
- </body>
+        var data = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        };
+
+        $.ajax({
+            url: url,
+            data: data,
+            dataType: 'jsonp',
+            cache: false,
+            timeout: 5000,
+            /* jsonp : 服务器获取回调函数名称的字段 */
+            jsonp: 'callback',
+            /* jsonpCallback： 本地回调函数的名称，jquery 默认随机生成函数名称 */
+            jsonpCallback: 'jsonpCallback',
+
+            success: function (data) {
+                alert(JSON.stringify(data));
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('error ' + textStatus + ' ' + errorThrown);
+            }
+        });
+    }
+
+    function loadScript() {
+        var script = document.createElement('script');
+        script.src = "http://localhost:3001/script/demo";
+        document.body.appendChild(script);
+    }
+
+    $(function () {
+        $('#submit1').on('click', function () {
+            ajaxCall('http://localhost:3000/ajax/demo');
+        });
+        $('#submit2').on('click', function () {
+            ajaxCall('http://localhost:3001/ajax/demo');
+        });
+        $('#submit3').on('click', function () {
+            jsonpCall('http://localhost:3001/jsonp/demo');
+        });
+        $('#submit4').on('click', function () {
+            loadScript();
+        });
+    });
+
+</script>
+<h1><%= title %></h1>
+<form>
+    username:<input type="text" id="username" value="zhangsan"><br>
+    password:<input type="text" id="password" value="111111"><br>
+    same origin call
+    <button type="button" id="submit1">submit</button>
+    <br>
+    cross domain call directly:shoud be error
+    <button type="button" id="submit2">direct</button>
+    <br>
+    cross domain call using jsonp
+    <button type="button" id="submit3">jsonp</button>
+    <br>
+    cross doamin call using script tag
+    <button type="button" id="submit4">script</button>
+</form>
+</body>
 </html>
