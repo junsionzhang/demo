@@ -29,7 +29,7 @@
     }
 
   $(function() {
-    $("#submit1").click(new click('http://localhost:3000/ajax/demo');  
+    $('#submit1').on('click',function(){click('http://localhost:3000/ajax/demo');});
     $("#submit2").click(new click('http://localhost:3001/ajax/demo');  
   });
 
@@ -39,7 +39,7 @@
         username:<input type="text" id="username" value="zhangsan"><br>
         password:<input type="text" id="password" value="111111"><br>
         <button type="button" id="submit1">local  server</button><br>
-        <button type="button" id="submit1">remote server</button>
+        <button type="button" id="submit2">remote server</button>
     </form>
  </body>
 </html>
