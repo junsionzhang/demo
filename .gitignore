@@ -1,0 +1,14 @@
+# webstorm
+.idea
+
+# .bak
+*.bak
+
+# node_modules
+node_modules/
+
+# logs
+logs/
+
+#
+.DS_Store
